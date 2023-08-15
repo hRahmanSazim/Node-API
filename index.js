@@ -11,49 +11,47 @@ let todos = [
   {
     task: "grab eggs",
     completed: "false",
-    id: "1",
+    id: 1,
   },
   {
     task: "buy an umbrella",
     completed: "false",
-    id: "2",
+    id: 2,
   },
   {
     task: "finish project",
     completed: "false",
-    id: "3",
+    id: 3,
   },
 ];
 
 let count = todos.length + 1;
 app.get("/todos", (req, res) => {
-  res.status(200).json(todos);
+  res.status(200).json({ data: todos });
 });
 
 app.post("/todos", function (req, res) {
   let tasks = req.body;
-  for (const task of tasks) {
-    task["id"] = `${count}`;
-    count += 1;
-  }
-  todos.push(...tasks);
-  res.status(201).send(todos);
+  tasks["id"] = count;
+  count += 1;
+  todos.push(tasks);
+  res.status(201).send({ data: tasks });
 });
 
 app.put("/todos/:id", (req, res) => {
   let id = req.params["id"];
   let newTask = todos.map((task) => {
-    if (task.id === id) {
+    if (task.id == id) {
       task["task"] = req.body["task"];
       task["completed"] = req.body["completed"];
     }
   });
-  res.send(todos);
+  res.send({ data: todos });
 });
 
 app.delete("/todos/:id", (req, res) => {
   let id = req.params["id"];
-  let removeIndex = todos.findIndex((e) => e.id === id);
+  let removeIndex = todos.findIndex((e) => e.id == id);
   todos.splice(removeIndex, 1);
-  res.send(todos);
+  res.send({ data: todos });
 });
