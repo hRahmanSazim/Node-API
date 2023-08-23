@@ -9,23 +9,23 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const db = require("./queries");
 
-let todos = [
-  {
-    task: "grab eggs",
-    completed: "false",
-    id: 1,
-  },
-  {
-    task: "buy an umbrella",
-    completed: "false",
-    id: 2,
-  },
-  {
-    task: "finish project",
-    completed: "false",
-    id: 3,
-  },
-];
+// let todos = [
+//   {
+//     task: "grab eggs",
+//     completed: "false",
+//     id: 1,
+//   },
+//   {
+//     task: "buy an umbrella",
+//     completed: "false",
+//     id: 2,
+//   },
+//   {
+//     task: "finish project",
+//     completed: "false",
+//     id: 3,
+//   },
+// ];
 
 // let count = todos.length + 1;
 // app.get("/todos", (req, res) => {
@@ -59,3 +59,4 @@ let todos = [
 // });
 
 app.get("/todos", db.getTasks);
+app.get("/todos/:id", db.getTaskById);
