@@ -22,6 +22,7 @@ const getTasks = (req, res) => {
     res.status(200).json(results.rows);
   });
 };
+
 const getTaskById = (req, res) => {
   const id = parseInt(req.params.id);
   pool.query("SELECT * FROM todolist WHERE id = $1", [id], (error, results) => {
@@ -32,7 +33,23 @@ const getTaskById = (req, res) => {
   });
 };
 
+const createTodo = (req, res) => {
+  const { task, completed } = req.body;
+
+  pool.query(
+    "INSERT INTO todolist (task, status) VALUES ($1, $2) RETURNING *",
+    [task, completed ? "not completed" : "completed"],
+    (error, results) => {
+      if (error) {
+        throw error;
+      }
+      res.status(201).send(`Todo added with ID: ${results.rows[0].id}`);
+    }
+  );
+};
+
 module.exports = {
   getTasks,
   getTaskById,
+  createTodo,
 };

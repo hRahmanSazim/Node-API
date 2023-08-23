@@ -60,3 +60,4 @@ const db = require("./queries");
 
 app.get("/todos", db.getTasks);
 app.get("/todos/:id", db.getTaskById);
+app.post("/todos", db.createTodo);
