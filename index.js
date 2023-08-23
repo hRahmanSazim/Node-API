@@ -62,3 +62,4 @@ app.get("/todos", db.getTasks);
 app.get("/todos/:id", db.getTaskById);
 app.post("/todos", db.createTodo);
 app.put("/todos/:id", db.updateTodo);
+app.delete("/todos/:id", db.deleteTodo);
