@@ -48,8 +48,25 @@ const createTodo = (req, res) => {
   );
 };
 
+const updateTodo = (req, res) => {
+  const id = parseInt(req.params.id);
+  const { task, completed } = req.body;
+
+  pool.query(
+    "UPDATE todolist SET task = $1, status = $2 WHERE id = $3",
+    [task, completed ? "not completed" : "completed", id],
+    (error, results) => {
+      if (error) {
+        throw error;
+      }
+      res.status(200).send(`Todo modified with ID: ${id}`);
+    }
+  );
+};
+
 module.exports = {
   getTasks,
   getTaskById,
   createTodo,
+  updateTodo,
 };
