@@ -1,6 +1,5 @@
-// GET: / | displayTodos()
-// GET: /tasks | getTasks()
-// GET: /tasks/:id | getTaskById()
+// GET: /todos | getTasks()
+// GET: /todos/:id | getTaskById()
 // POST: /todos | createTodo()
 // PUT: /todos/:id | updateTodo()
 // DELETE: /todos/:id | deleteTodo()
