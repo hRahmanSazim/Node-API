@@ -30,9 +30,10 @@ const getTaskById = (req, res) => {
     if (error) {
       throw error;
     }
-    if (results.rows.length > 0) res.status(200).json(results.rows);
-    else {
+    if (results.rows.length == 0)
       res.status(204).send(); //`Todo with ID: ${id} does not exist!`
+    else {
+      res.status(200).json(results.rows);
     }
   });
 };
