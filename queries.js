@@ -19,7 +19,8 @@ const getTasks = (req, res) => {
     if (error) {
       throw error;
     }
-    res.status(200).json(results.rows);
+    let todolist = { todolist: results.rows };
+    res.status(200).json(todolist);
   });
 };
 
@@ -29,7 +30,8 @@ const getTaskById = (req, res) => {
     if (error) {
       throw error;
     }
-    res.status(200).json(results.rows);
+    let todolist = { todolist: results.rows };
+    res.status(200).json(todolist);
   });
 };
 
