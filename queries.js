@@ -30,17 +30,18 @@ const getTaskById = (req, res) => {
     if (error) {
       throw error;
     }
-    let todolist = { todolist: results.rows };
-    res.status(200).json(todolist);
+    if (results.rows.length > 0) res.status(200).json(results.rows);
+    else {
+      res.status(204).send(); //`Todo with ID: ${id} does not exist!`
+    }
   });
 };
 
 const createTodo = (req, res) => {
   const { task, completed } = req.body;
-
   pool.query(
     "INSERT INTO todolist (task, status) VALUES ($1, $2) RETURNING *",
-    [task, completed ? "not completed" : "completed"],
+    [task, completed ? "completed" : "not completed"],
     (error, results) => {
       if (error) {
         throw error;
@@ -52,16 +53,16 @@ const createTodo = (req, res) => {
 
 const updateTodo = (req, res) => {
   const id = parseInt(req.params.id);
-  const { task, completed } = req.body;
+  let { task, completed } = req.body;
 
   pool.query(
     "UPDATE todolist SET task = $1, status = $2 WHERE id = $3",
-    [task, completed ? "not completed" : "completed", id],
+    [task, completed ? "completed" : "not completed", id],
     (error, results) => {
       if (error) {
         throw error;
       }
-      res.status(200).send(`Todo modified with ID: ${id}`);
+      res.status(200).send(req.body);
     }
   );
 };
